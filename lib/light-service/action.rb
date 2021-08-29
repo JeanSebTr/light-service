@@ -31,7 +31,7 @@ module LightService
       end
 
       def executed
-        define_singleton_method :execute do |context = {}|
+        define_singleton_method :execute do |context = Context.make|
           action_context = create_action_context(context)
           return action_context if action_context.stop_processing?
 
@@ -44,8 +44,8 @@ module LightService
             catch(:jump_when_failed) do
               call_before_action(action_context)
 
-              if context[:_around_actions]&.respond_to?(:call)
-                context[:_around_actions].call(action_context) do
+              if context.instance_of?(Context) and context.around_actions.respond_to?(:call)
+                context.around_actions.call(action_context) do
                   yield(action_context)
                   action_context
                 end
