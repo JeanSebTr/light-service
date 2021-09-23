@@ -118,6 +118,14 @@ module TestDoubles
     end
   end
 
+  class NamedArgumentOrganiser
+    extend LightService::Organizer
+
+    def self.call(number:)
+      with(number: number).reduce([AddsTwoAction])
+    end
+  end
+
   class NotExplicitlyReturningContextOrganizer
     extend LightService::Organizer
 
