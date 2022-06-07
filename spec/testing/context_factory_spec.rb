@@ -70,7 +70,7 @@ describe 'ContextFactory - used with NamedArgumentOrganiser' do
       LightService::Testing::ContextFactory
       .make_from(organizer)
       .for(TestDoubles::AddsTwoAction)
-      .with(number: 2)
+      .with(number: 2) # rubocop:disable Style/HashSyntax
 
     expect(ctx[:number]).to eq(2)
   end
